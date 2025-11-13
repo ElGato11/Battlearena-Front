@@ -1,0 +1,8 @@
+<h2>Mis personajes</h2>
+<button routerLink="/nueva-sala">Crear nueva sala</button>
+
+<div class="lista">
+  <div class="sala-card" *ngFor="let s of salas">
+    <h4>{{ s.nombre }}</h4>
+  </div>
+</div>
