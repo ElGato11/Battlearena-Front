@@ -20,7 +20,7 @@
         <li><a routerLink="/mis-personajes">Mis Personajes</a></li>
         <li *ngIf="userService.isAdmin()"><a routerLink="/usuarios">Usuarios</a></li>
         <li class="arena-link" *ngIf="true">
-          <a routerLink="/arena">⚔️Arena⚔️</a>
+          <a routerLink="/lista-salas">⚔️Arena⚔️</a>
         </li>
         <li><a href="/" (click)="logout()">Cerrar Sesión</a></li>
       </ng-container>

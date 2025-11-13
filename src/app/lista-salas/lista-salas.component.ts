@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { Usuario } from '../utils/model/usuario';
 import { UserService } from '../utils/service/user.service';
 import { SalasService } from '../utils/service/salas.service';
-import { Sala } from '../utils/model/Sala';
+import { Sala } from '../utils/model/sala';
 
 @Component({
   selector: 'app-lista-salas',

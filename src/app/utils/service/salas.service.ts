@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Sala } from '../model/Sala';
+import { Sala } from '../model/sala';
 
 @Injectable({ providedIn: 'root' })
 export class SalasService {
