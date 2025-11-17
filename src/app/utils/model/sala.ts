@@ -1,9 +1,10 @@
-import { Personaje } from "./personaje";
+import { Combatiente } from "./combatiente";
 
 export interface Sala{
+    id: number,
     nombre: string,
-    usuario1: number,
-    usuario2: number,
-    personaje1: Personaje,
-    personaje2: Personaje,
+    anfitrion: number,
+    contrincante: number,
+    pAnfitrion: Combatiente,
+    pContrincante: Combatiente,
 }

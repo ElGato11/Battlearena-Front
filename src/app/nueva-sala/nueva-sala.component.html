@@ -5,9 +5,6 @@
     <label class="form-label">Nombre</label>
     <input class="form-control" formControlName="nombre" placeholder="Nombre de sala" />
 
-    <label class="form-label">Contraseña</label>
-    <input type="password" class="form-control" formControlName="clave" placeholder="Contraseña" />
-
     <div *ngIf="creationMessage" class="success-message">{{ creationMessage }}</div>
     <div *ngIf="creationError" class="error-message">{{ creationError }}</div>
 

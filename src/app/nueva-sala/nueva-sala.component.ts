@@ -18,8 +18,12 @@ creationMessage = '';
 
   constructor(private fb: FormBuilder, private salaService: SalasService, private userService: UserService, private router: Router) {}
 
-  userForm = this.fb.group({
+  salaForm = this.fb.group({
     nombre: [`Sala de ${this.userService.currentUser()?.nombre}`, [Validators.required, Validators.minLength(3)]],
-    usuario1:
-  });
+    usuario1: [this.userService.currentUser()?.idUsuario]
+});
+
+crearSala(id: number){
+  this.router.navigateByUrl(`sala/${id}`)
+}
 }

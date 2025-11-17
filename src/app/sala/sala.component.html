@@ -1,1 +1,13 @@
-<p>sala works!</p>
+<div class="nueva-sala-container medieval-theme">
+  <h1 class="title">¡Que empiece el combate!</h1>
+
+  <form>
+    <label class="form-label">Nombre</label>
+    <input class="form-control" formControlName="nombre" placeholder="Nombre de sala" />
+
+    <div *ngIf="creationMessage" class="success-message"></div>
+    <div *ngIf="creationError" class="error-message"></div>
+
+    <button type="button" class="btn medieval-btn" >Crear Sala</button>
+  </form>
+</div>

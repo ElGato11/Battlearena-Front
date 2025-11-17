@@ -8,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './sala.component.css'
 })
 export class SalaComponent {
+constructor(){
 
+}
 }

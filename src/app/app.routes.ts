@@ -4,6 +4,9 @@ import { SesionUsuarioComponent } from './sesion-usuario/sesion-usuario.componen
 import { NuevoPersonajeComponent } from './nuevo-personaje/nuevo-personaje.component';
 import { NuevoUsuarioComponent } from './nuevo-usuario/nuevo-usuario.component';
 import { ListaPersonajesComponent } from './lista-personajes/lista-personajes.component';
+import { SalaComponent } from './sala/sala.component';
+import { ListaSalasComponent } from './lista-salas/lista-salas.component';
+import { NuevaSalaComponent } from './nueva-sala/nueva-sala.component';
 
 export const routes: Routes = [
     {path: '', component: InicioComponent},
@@ -11,5 +14,8 @@ export const routes: Routes = [
     {path: 'crear-personaje', component: NuevoPersonajeComponent},
     {path: 'crear-usuario', component: NuevoUsuarioComponent},
     {path: 'mis-personajes', component: ListaPersonajesComponent},
-    {path: 'nuevo-personaje', component: NuevoPersonajeComponent}
+    {path: 'nuevo-personaje', component: NuevoPersonajeComponent},
+    {path: 'lista-salas', component: ListaSalasComponent},
+    {path: 'nueva-sala', component: NuevaSalaComponent},
+    {path: 'sala/:id', component: SalaComponent}
 ];
