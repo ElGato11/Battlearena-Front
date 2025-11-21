@@ -7,6 +7,7 @@ import { ListaPersonajesComponent } from './lista-personajes/lista-personajes.co
 import { SalaComponent } from './sala/sala.component';
 import { ListaSalasComponent } from './lista-salas/lista-salas.component';
 import { NuevaSalaComponent } from './nueva-sala/nueva-sala.component';
+import { EditarPersonajeComponent } from './editar-personaje/editar-personaje.component';
 
 export const routes: Routes = [
     {path: '', component: InicioComponent},
@@ -17,5 +18,6 @@ export const routes: Routes = [
     {path: 'nuevo-personaje', component: NuevoPersonajeComponent},
     {path: 'lista-salas', component: ListaSalasComponent},
     {path: 'nueva-sala', component: NuevaSalaComponent},
-    {path: 'sala/:id', component: SalaComponent}
+    {path: 'sala/:nombre', component: SalaComponent},
+    {path: 'editar-personaje/:id', component: EditarPersonajeComponent}
 ];

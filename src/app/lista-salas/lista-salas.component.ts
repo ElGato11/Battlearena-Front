@@ -18,7 +18,7 @@ export class ListaSalasComponent {
   usuario!: Usuario | null;
 constructor(
   private userService: UserService,
-  private SalasService: SalasService 
+  private salasService: SalasService 
 ){}
 
   ngOnInit(): void {
@@ -27,7 +27,7 @@ constructor(
   cargarDatos(): void {
     this.usuario = this.userService.currentUser();
     if(this.usuario){
-      this.SalasService.getSalas(this.usuario?.idUsuario).subscribe(s => this.salas = s);
+      this.salasService.getSalas().subscribe(s => this.salas = s);
     }    
   }
 }

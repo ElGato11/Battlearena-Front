@@ -1,0 +1,133 @@
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bgShift {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+.sala-container {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #1a2a3a, #0d1824);
+  background-size: 200% 200%;
+  animation: bgShift 15s ease infinite;
+}
+
+.sala-box {
+  background-color: rgba(255, 250, 240, 0.95);
+  border: 3px solid #8b0000;
+  padding: 2.5rem;
+  border-radius: 1.2rem;
+  max-width: 650px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.8s ease-out;
+}
+
+.sala-box h1 {
+  font-size: 2.4rem;
+  color: #111;
+  margin-bottom: 1rem;
+  font-family: 'Georgia', serif;
+}
+
+.sala-box h2 {
+  font-size: 1.8rem;
+  color: #5e0a0a;
+  margin-bottom: 2rem;
+  font-family: 'Georgia', serif;
+}
+
+.sala-box select {
+  margin-top: 1rem;
+  padding: 0.6rem;
+  width: 100%;
+  border: 2px solid #8b0000;
+  border-radius: 0.5rem;
+  font-family: 'Georgia', serif;
+  font-size: 1.1rem;
+  background-color: #fffaf0;
+  transition: 0.3s;
+  color: #222;
+}
+
+.sala-box select:hover {
+  background-color: #fff2e6;
+}
+
+.sala-btn {
+  margin-top: 1.5rem;
+  background: linear-gradient(145deg, #ffe0e0, #e0f0ff);
+  border: 2px solid #8b0000;
+  color: #222;
+  padding: 0.7rem 1.4rem;
+  border-radius: 0.8rem;
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.sala-btn:hover {
+  background: #ffdede;
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.sala-btn:hover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: skewX(-20deg);
+  animation: shine 0.8s forwards;
+}
+
+@keyframes shine {
+  to { left: 100%; }
+}
+
+.estado {
+  margin-top: 2rem;
+  font-size: 1.3rem;
+  font-family: 'Georgia', serif;
+  color: #222;
+}
+
+.estado p {
+  color: #222;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.09); }
+  100% { transform: scale(1); }
+}
+
+.listo {
+  background-color: rgba(0, 150, 0, 0.7);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #f0fff0;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.esperando {
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+}

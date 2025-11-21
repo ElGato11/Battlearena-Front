@@ -1,13 +1,35 @@
-<div class="nueva-sala-container medieval-theme">
-  <h1 class="title">¡Que empiece el combate!</h1>
+<div class="sala-container" *ngIf="sala">
+  <div class="sala-box">
+    <h1>¡Que empiece el combate!</h1>
 
-  <form>
-    <label class="form-label">Nombre</label>
-    <input class="form-control" formControlName="nombre" placeholder="Nombre de sala" />
+    <h2>{{ sala.nombre }}</h2>
 
-    <div *ngIf="creationMessage" class="success-message"></div>
-    <div *ngIf="creationError" class="error-message"></div>
+    <label>Selecciona un personaje:</label>
+    <select [(ngModel)]="personajeSeleccionado">
+      <option [ngValue]="null">-- Elige tu personaje --</option>
+      <option *ngFor="let p of personajes" [ngValue]="p">
+        {{ p.nombre }}
+      </option>
+    </select>
 
-    <button type="button" class="btn medieval-btn" >Crear Sala</button>
-  </form>
+    <button class="sala-btn" (click)="seleccionarPersonaje()">Listo</button>
+
+    <div class="estado">
+      <p>
+        Anfitrión:
+        <span *ngIf="sala.pAnfitrion; else esperandoA" class="listo">✔ Listo</span>
+        <ng-template #esperandoA>
+          <span class="esperando">Esperando…</span>
+        </ng-template>
+      </p>
+
+      <p>
+        Contrincante:
+        <span *ngIf="sala.pContrincante; else esperandoC" class="listo">✔ Listo</span>
+        <ng-template #esperandoC>
+          <span class="esperando">Esperando…</span>
+        </ng-template>
+      </p>
+    </div>
+  </div>
 </div>

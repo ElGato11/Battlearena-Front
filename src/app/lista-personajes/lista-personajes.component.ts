@@ -26,6 +26,7 @@ constructor(
     this.usuario = this.userService.currentUser();
     if(this.usuario){
       this.userService.getMisPersonajes(this.usuario?.idUsuario).subscribe(p => this.personajes = p);
-    }    
+    }   
+    console.log(this.personajes);
   }
 }

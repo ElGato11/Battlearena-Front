@@ -7,13 +7,8 @@
       <input formControlName="nombre" />
     </div>
 
-    <div class="campo">
-      <label>Descripción:</label>
-      <textarea formControlName="descripcion"></textarea>
-    </div>
-
     <div class="estadisticas">
-      <div *ngFor="let stat of ['fuerza', 'destreza', 'constitucion', 'inteligencia', 'sabiduria', 'carisma']">
+      <div *ngFor="let stat of ['fuerza', 'destreza', 'vigor', 'inteligencia', 'sabiduria', 'carisma']">
         <label>{{ stat | titlecase }}</label>
         <input type="number" [formControlName]="stat" />
       </div>

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../utils/service/user.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { SalasService } from '../utils/service/salas.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +15,9 @@ export class NavbarComponent {
 menuOpen = false;
 
 constructor(
-public userService: UserService  
+public userService: UserService,
+public salasService: SalasService,
+public router: Router  
 ){}
 
 toggleMenu() {
@@ -23,5 +26,14 @@ toggleMenu() {
 logout(){
   this.userService.logout();
 
+}
+entrarArena() {
+  const sala = this.salasService.getSalaActual();
+
+  if (sala && this.salasService.existe(sala)) {
+    this.router.navigate([`/sala/${sala}`]);
+  } else {
+    this.router.navigate(['/lista-salas']);
+  }
 }
 }
