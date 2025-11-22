@@ -12,7 +12,9 @@
       </option>
     </select>
 
-    <button class="sala-btn" (click)="seleccionarPersonaje()">Listo</button>
+    <button *ngIf="flagSeleccion" class="sala-btn" (click)="seleccionarPersonaje()">Seleccionar</button>
+    <button *ngIf="!flagSeleccion" class="sala-btn" (click)="cancelar()">Cancelar</button>
+    <button *ngIf="!flagSeleccion" class="sala-btn" (click)="listo()">Listo</button>
 
     <div class="estado">
       <p>
@@ -20,6 +22,7 @@
         <span *ngIf="sala.pAnfitrion; else esperandoA" class="listo">✔ Listo</span>
         <ng-template #esperandoA>
           <span class="esperando">Esperando…</span>
+          <span class="listo">¡Listo!</span>
         </ng-template>
       </p>
 
@@ -28,6 +31,7 @@
         <span *ngIf="sala.pContrincante; else esperandoC" class="listo">✔ Listo</span>
         <ng-template #esperandoC>
           <span class="esperando">Esperando…</span>
+          <span class="listo">¡Listo!</span>
         </ng-template>
       </p>
     </div>

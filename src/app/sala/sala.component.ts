@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import SockJS from 'sockjs-client/dist/sockjs';
 import { Client } from '@stomp/stompjs';
 import { SalasService } from '../utils/service/salas.service';
+import { seleccionarPersonaje } from '../utils/request/seleccionarPersonaje.request';
 
 @Component({
   selector: 'app-sala',
@@ -24,6 +25,7 @@ export class SalaComponent {
   stompClient!: Client;
   nombreSala!: string;
   usuarioId!: number;
+  flagSeleccion: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -67,13 +69,20 @@ export class SalaComponent {
   seleccionarPersonaje() {
     if (!this.sala || !this.personajeSeleccionado) return;
 
-    const body = {
+    const body: seleccionarPersonaje = {
       nombreSala: this.nombreSala,
       usuarioId: this.usuarioId,
       personajeId: this.personajeSeleccionado.id
     };
 
-    this.http.post('http://localhost:8080/salas/seleccionar-personaje', body)
-      .subscribe();
+    this.salasService.seleccionarPersonaje(body).subscribe(r =>{
+      this.flagSeleccion = r;
+    });
+  }
+  cancelar(){
+    this.flagSeleccion = false;
+  }
+  listo(){
+      ;
   }
 }

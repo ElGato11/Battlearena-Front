@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Sala } from '../model/sala';
 import {CrearSalaRequest} from '../request/crearSala.request';
 import { Usuario } from '../model/usuario';
+import { seleccionarPersonaje } from '../request/seleccionarPersonaje.request';
 
 @Injectable({ providedIn: 'root' })
 export class SalasService {
@@ -12,11 +13,11 @@ export class SalasService {
   
   getSalas(): Observable<Sala[]> {
     return this.http.get<Sala[]>(`${this.apiUrl}/lista-salas`);
-}
+  }
   crearSala(body: CrearSalaRequest): Observable<Sala> {
     this.setSalaActual(body.nombre);
     return this.http.post<Sala>(`${this.apiUrl}/crear`, body);
-}
+  }
   getSalaActual() {
   const data = localStorage.getItem("user");
   if (!data) return null;
@@ -28,7 +29,7 @@ export class SalasService {
   }
 
   return usuario.salaActual.trim();
-}
+  }
   setSalaActual(nombre: string){
     var usuario: Usuario =JSON.parse(localStorage.getItem("user") || "") ;
     usuario.salaActual = nombre;
@@ -39,5 +40,8 @@ export class SalasService {
   }
   cargarSala(nombre: string){
     return this.http.get<Sala>(`${this.apiUrl}/${nombre}`);
+  }
+  seleccionarPersonaje(body: seleccionarPersonaje){
+    return this.http.post<boolean>(`${this.apiUrl}/seleccionar-personaje`, body)
   }
 }

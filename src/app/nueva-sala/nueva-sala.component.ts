@@ -37,7 +37,7 @@
 
     this.salaService.crearSala(nuevaSala).subscribe({
       next: (sala: Sala) => {
-        this.router.navigateByUrl(`/sala/${sala.id}`);
+        this.router.navigateByUrl(`/sala/${sala.nombre}`);
       },
       error: e => {
         const msg = e?.error || 'No se pudo crear la sala';
