@@ -20,7 +20,7 @@ export class SalaComponent implements OnDestroy {
   sala: Sala | null = null;
   stompClient!: CompatClient;
   nombreSala!: string;
-  flagSeleccion: boolean = true;
+  estoyListo: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -56,11 +56,9 @@ export class SalaComponent implements OnDestroy {
     });
   });
 }
-  cancelar(){
-    this.flagSeleccion = false;
-  }
-  listo(){
-      ;
+  combatir(){
+    JSON.parse(this.sala!.contrincante);
+    JSON.parse(this.sala!.anfitrion);
   }
   salir(){
     this.salasService.borrarSala(this.nombreSala).subscribe(()=> this.router.navigateByUrl(`/lista-salas`));

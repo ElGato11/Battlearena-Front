@@ -5,31 +5,33 @@
 
       <h2>{{ sala.nombre }}</h2>
     
-      <button *ngIf="!flagSeleccion" class="sala-btn" (click)="cancelar()">Cancelar</button>
-      <button *ngIf="!flagSeleccion" class="sala-btn" (click)="listo()">Listo</button>
+      
 
       <div class="estado">
         <p>
           Anfitrión:
+          {{ sala.anfitrion }}
           <span *ngIf="sala.pAnfitrion; else esperandoA" class="listo">✔ Listo</span>
           <ng-template #esperandoA>
-            <span class="esperando">Esperando…</span>
-            <span class="listo">¡Listo!</span>
+            <span *ngIf="!sala.anfitrion" class="esperando">Esperando…</span>
+            <span *ngIf="sala.anfitrion" class="listo">¡Listo!</span>
           </ng-template>
         </p>
 
         <p>
           Contrincante:
+          {{ sala.contrincante }}
           <span *ngIf="sala.pContrincante; else esperandoC" class="listo">✔ Listo</span>
           <ng-template #esperandoC>
-            <span class="esperando">Esperando…</span>
-            <span class="listo">¡Listo!</span>
+            <span *ngIf="!sala.contrincante" class="esperando">Esperando…</span>
+            <span *ngIf="sala.contrincante" class="listo">¡Listo!</span>
           </ng-template>
         </p>
       </div>
     </div>
     <div class="sala-item" id="btn-salir">
       <button class="sala-btn" (click)="salir()">Salir</button>
+      <button *ngIf="!estoyListo" class="sala-btn" (click)="combatir()">Combatir</button>
     </div>
     
   </div>

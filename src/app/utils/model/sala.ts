@@ -1,10 +1,11 @@
 import { Personaje } from "./personaje";
+import { Usuario } from "./usuario";
 
 export interface Sala{
     id: number,
     nombre: string,
-    anfitrion: number,
-    contrincante: number | null,
+    anfitrion: string,
+    contrincante: string,
     pAnfitrion: Personaje | null,
     pContrincante: Personaje | null,
 }
