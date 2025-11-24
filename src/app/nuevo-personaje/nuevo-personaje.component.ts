@@ -4,8 +4,7 @@ import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { PersonajeService } from '../utils/service/personaje.service';
 import { UserService } from '../utils/service/user.service';
-import { Personaje } from '../utils/model/personaje';
-import { CrearPersonajeRequest } from '../utils/request/crearPersonaje.request';
+import { personajeRequest } from '../utils/request/personaje.request';
 
 @Component({
   selector: 'app-nuevo-personaje',
@@ -46,7 +45,7 @@ guardar() {
     return;
   }
 
-  const body: CrearPersonajeRequest = this.personajeForm.getRawValue();
+  const body: personajeRequest = this.personajeForm.getRawValue();
 
   this.personajeService.crear(usuario.idUsuario, body).subscribe({
     next: () => this.router.navigateByUrl('/mis-personajes'),

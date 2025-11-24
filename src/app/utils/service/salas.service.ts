@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Sala } from '../model/sala';
-import {CrearSalaRequest} from '../request/crearSala.request';
 import { Usuario } from '../model/usuario';
-import { seleccionarPersonaje } from '../request/seleccionarPersonaje.request';
+import { SalaRequest } from '../request/sala.request';
 
 @Injectable({ providedIn: 'root' })
 export class SalasService {
@@ -14,8 +13,8 @@ export class SalasService {
   getSalas(): Observable<Sala[]> {
     return this.http.get<Sala[]>(`${this.apiUrl}/lista-salas`);
   }
-  crearSala(body: CrearSalaRequest): Observable<Sala> {
-    this.setSalaActual(body.nombre);
+  crearSala(body: SalaRequest): Observable<Sala> {
+    this.setSalaActual(body.nombreSala);
     return this.http.post<Sala>(`${this.apiUrl}/crear`, body);
   }
   getSalaActual() {
@@ -31,9 +30,12 @@ export class SalasService {
   return usuario.salaActual.trim();
   }
   setSalaActual(nombre: string){
-    var usuario: Usuario =JSON.parse(localStorage.getItem("user") || "") ;
-    usuario.salaActual = nombre;
-    localStorage.setItem("user",JSON.stringify(usuario));
+    const data = localStorage.getItem("user");
+  if (!data) return;
+
+  const usuario: Usuario = JSON.parse(data);
+  usuario.salaActual = nombre;
+  localStorage.setItem("user", JSON.stringify(usuario));
   }
   existe(nombre: string){
     return this.http.get<boolean>(`${this.apiUrl}/existe/${nombre}`);
@@ -41,7 +43,10 @@ export class SalasService {
   cargarSala(nombre: string){
     return this.http.get<Sala>(`${this.apiUrl}/${nombre}`);
   }
-  seleccionarPersonaje(body: seleccionarPersonaje){
-    return this.http.post<boolean>(`${this.apiUrl}/seleccionar-personaje`, body)
+  borrarSala(nombre: string){
+    return this.http.delete<void>(`${this.apiUrl}/borrar/${nombre}`)
+  }
+  unirseSala(body: SalaRequest){
+    return this.http.post<boolean>(`${this.apiUrl}/unirse`,body)
   }
 }

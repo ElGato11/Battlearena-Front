@@ -29,11 +29,11 @@ logout(){
 }
 entrarArena() {
   const sala = this.salasService.getSalaActual();
-
-  if (sala && this.salasService.existe(sala)) {
-    this.router.navigate([`/sala/${sala}`]);
-  } else {
-    this.router.navigate(['/lista-salas']);
+  if(sala){
+    this.salasService.existe(sala).subscribe(b => {
+      if(b)this.router.navigate([`/sala/${sala}`]);
+      else this.router.navigate(['/lista-salas']);
+    })
   }
 }
 }

@@ -3,7 +3,7 @@ export interface Personaje {
   nombre: string;
   fuerza: number;
   destreza: number;
-  constitucion: number;
+  vigor: number;
   inteligencia: number;
   sabiduria: number;
   carisma: number;

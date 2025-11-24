@@ -1,0 +1,14 @@
+.btn {
+  margin-top: 0.5rem;
+  background: linear-gradient(145deg, #ffe0e0, #e0f0ff);
+  border: 1px solid #8b0000;
+  color: #222;
+  padding: 0.4rem 0.4rem;
+  border-radius: 0.8rem;
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}

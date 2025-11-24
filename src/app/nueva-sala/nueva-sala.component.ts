@@ -1,38 +1,47 @@
   import { CommonModule } from '@angular/common';
   import { Component } from '@angular/core';
-  import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+  import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
   import { Router, RouterModule } from '@angular/router';
   import { SalasService } from '../utils/service/salas.service';
   import { UserService } from '../utils/service/user.service';
-  import { CrearSalaRequest } from '../utils/request/crearSala.request';
   import { Sala } from '../utils/model/sala';
+import { Personaje } from '../utils/model/personaje';
+import { SalaRequest } from '../utils/request/sala.request';
 
   @Component({
     selector: 'app-nueva-sala',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, RouterModule],
+    imports: [CommonModule, ReactiveFormsModule, RouterModule, FormsModule],
     templateUrl: './nueva-sala.component.html',
     styleUrl: './nueva-sala.component.css'
   })
   export class NuevaSalaComponent {
-  creationMessage = '';
-    creationError = '';
+      personajes: Personaje[] = [];
+      creationMessage = '';
+      creationError = '';
 
     constructor(private fb: FormBuilder, private salaService: SalasService, private userService: UserService, private router: Router) {}
 
     salaForm = this.fb.group({
       nombre: [`Sala de ${this.userService.currentUser()?.nombre}`, [Validators.required, Validators.minLength(3)]],
-      anfitrion: [this.userService.currentUser()?.idUsuario]
+      personajeSeleccionado: [null as Personaje | null,Validators.required]
   });
+  ngOnInit(): void{
+    this.userService.getMisPersonajes().subscribe(p => {
+      this.personajes = p;
+    });
+  }
 
   crearSala() {
     this.creationMessage = '';
     this.creationError = '';
     if (this.salaForm.invalid) return;
+    const personajeSel = this.salaForm.get('personajeSeleccionado')!.value;
+    if (!personajeSel) return;
 
-    const nuevaSala: CrearSalaRequest = {
-      nombre: this.salaForm.value.nombre!,
-      id: this.salaForm.value.anfitrion!
+    const nuevaSala: SalaRequest = {
+      nombreSala: this.salaForm.value.nombre!,
+      personaje: personajeSel.id,
     };
 
     this.salaService.crearSala(nuevaSala).subscribe({

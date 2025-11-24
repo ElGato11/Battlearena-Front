@@ -1,39 +1,36 @@
 <div class="sala-container" *ngIf="sala">
   <div class="sala-box">
-    <h1>¡Que empiece el combate!</h1>
+    <div class="sala-item">
+      <h1>¡Que empiece el combate!</h1>
 
-    <h2>{{ sala.nombre }}</h2>
+      <h2>{{ sala.nombre }}</h2>
+    
+      <button *ngIf="!flagSeleccion" class="sala-btn" (click)="cancelar()">Cancelar</button>
+      <button *ngIf="!flagSeleccion" class="sala-btn" (click)="listo()">Listo</button>
 
-    <label>Selecciona un personaje:</label>
-    <select [(ngModel)]="personajeSeleccionado">
-      <option [ngValue]="null">-- Elige tu personaje --</option>
-      <option *ngFor="let p of personajes" [ngValue]="p">
-        {{ p.nombre }}
-      </option>
-    </select>
+      <div class="estado">
+        <p>
+          Anfitrión:
+          <span *ngIf="sala.pAnfitrion; else esperandoA" class="listo">✔ Listo</span>
+          <ng-template #esperandoA>
+            <span class="esperando">Esperando…</span>
+            <span class="listo">¡Listo!</span>
+          </ng-template>
+        </p>
 
-    <button *ngIf="flagSeleccion" class="sala-btn" (click)="seleccionarPersonaje()">Seleccionar</button>
-    <button *ngIf="!flagSeleccion" class="sala-btn" (click)="cancelar()">Cancelar</button>
-    <button *ngIf="!flagSeleccion" class="sala-btn" (click)="listo()">Listo</button>
-
-    <div class="estado">
-      <p>
-        Anfitrión:
-        <span *ngIf="sala.pAnfitrion; else esperandoA" class="listo">✔ Listo</span>
-        <ng-template #esperandoA>
-          <span class="esperando">Esperando…</span>
-          <span class="listo">¡Listo!</span>
-        </ng-template>
-      </p>
-
-      <p>
-        Contrincante:
-        <span *ngIf="sala.pContrincante; else esperandoC" class="listo">✔ Listo</span>
-        <ng-template #esperandoC>
-          <span class="esperando">Esperando…</span>
-          <span class="listo">¡Listo!</span>
-        </ng-template>
-      </p>
+        <p>
+          Contrincante:
+          <span *ngIf="sala.pContrincante; else esperandoC" class="listo">✔ Listo</span>
+          <ng-template #esperandoC>
+            <span class="esperando">Esperando…</span>
+            <span class="listo">¡Listo!</span>
+          </ng-template>
+        </p>
+      </div>
     </div>
+    <div class="sala-item" id="btn-salir">
+      <button class="sala-btn" (click)="salir()">Salir</button>
+    </div>
+    
   </div>
 </div>

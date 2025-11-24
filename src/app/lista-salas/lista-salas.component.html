@@ -1,8 +1,19 @@
-<h2>Mis personajes</h2>
+<h2>Salas disponibles</h2>
 <button routerLink="/nueva-sala">Crear nueva sala</button>
-
-<div class="lista">
-  <div class="sala-card" *ngFor="let s of salas">
-    <h4>{{ s.nombre }}</h4>
+<form [formGroup]="selecPers">
+  <div>selector de personaje
+      <label>Selecciona un personaje:</label>
+      <select formControlName="personajeSeleccionado">
+        <option [ngValue]="null">-- Elige tu personaje --</option>
+        <option *ngFor="let p of personajes" [ngValue]="p">
+          {{ p.nombre }}
+        </option>
+      </select>
   </div>
-</div>
+  <div class="lista">
+    <div class="sala-card" *ngFor="let s of salas">
+      <h4>{{ s.nombre }}</h4>
+      <button class="btn" (click)="unirse(s.nombre)">Unirse</button>
+    </div>
+  </div>
+</form>

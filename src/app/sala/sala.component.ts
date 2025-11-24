@@ -1,88 +1,69 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UserService } from '../utils/service/user.service';
 import { Sala } from '../utils/model/sala';
-import { Personaje } from '../utils/model/personaje';
 import { HttpClient } from '@angular/common/http';
-import SockJS from 'sockjs-client/dist/sockjs';
-import { Client } from '@stomp/stompjs';
 import { SalasService } from '../utils/service/salas.service';
-import { seleccionarPersonaje } from '../utils/request/seleccionarPersonaje.request';
+import { WebSocketService } from '../utils/service/webSocket.service';
+import { CompatClient } from '@stomp/stompjs';
 
 @Component({
   selector: 'app-sala',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './sala.component.html',
   styleUrl: './sala.component.css'
 })
-export class SalaComponent {
+export class SalaComponent implements OnDestroy {
   sala: Sala | null = null;
-  personajes: Personaje[] = [];
-  personajeSeleccionado: Personaje | null = null;
-  stompClient!: Client;
+  stompClient!: CompatClient;
   nombreSala!: string;
-  usuarioId!: number;
   flagSeleccion: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
     private salasService: SalasService,
-    private http: HttpClient
+    private http: HttpClient,
+    private webSocketService: WebSocketService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.nombreSala = this.route.snapshot.paramMap.get('nombre')!;
-    this.usuarioId = this.userService.currentUser()!.idUsuario;
     this.salasService.cargarSala(this.nombreSala)
       .subscribe(s => {
         this.sala = s;
         console.log(this.sala);
       });
-    this.cargarPersonajes();
     this.conectarWS();
   }
-
-  cargarPersonajes() {
-    this.userService.getMisPersonajes(this.usuarioId)
-      .subscribe(p => this.personajes = p);
+  ngOnDestroy(): void {
+  if (this.stompClient && this.stompClient.active) {
+    this.stompClient.deactivate();
   }
+}
 
   conectarWS() {
-    this.stompClient = new Client({
-      webSocketFactory: () => new SockJS('http://localhost:8080/ws'),
-      reconnectDelay: 500
+  this.stompClient = this.webSocketService.cliente();
+  this.stompClient.debug = () => {};
+
+  this.stompClient.connect({}, () => {
+    this.stompClient.subscribe(`/topic/sala/${this.nombreSala}`, msg => {
+      this.sala = JSON.parse(msg.body);
     });
-
-    this.stompClient.onConnect = () => {
-      this.stompClient.subscribe(`/topic/sala/${this.nombreSala}`, msg => {
-        this.sala = JSON.parse(msg.body);
-      });
-    };
-
-    this.stompClient.activate();
-  }
-
-  seleccionarPersonaje() {
-    if (!this.sala || !this.personajeSeleccionado) return;
-
-    const body: seleccionarPersonaje = {
-      nombreSala: this.nombreSala,
-      usuarioId: this.usuarioId,
-      personajeId: this.personajeSeleccionado.id
-    };
-
-    this.salasService.seleccionarPersonaje(body).subscribe(r =>{
-      this.flagSeleccion = r;
-    });
-  }
+  });
+}
   cancelar(){
     this.flagSeleccion = false;
   }
   listo(){
       ;
+  }
+  salir(){
+    this.salasService.borrarSala(this.nombreSala).subscribe(()=> this.router.navigateByUrl(`/lista-salas`));
+    
   }
 }

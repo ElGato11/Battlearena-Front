@@ -1,4 +1,4 @@
-export interface CrearPersonajeRequest {
+export interface personajeRequest {
   nombre: string;
   vigor: number;
   fuerza: number;

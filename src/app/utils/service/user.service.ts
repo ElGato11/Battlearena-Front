@@ -17,8 +17,8 @@ export class UserService {
 
     constructor(private http: HttpClient) {}
 
-  getMisPersonajes(id: Number): Observable<Personaje[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/personajes/${id}`);
+  getMisPersonajes(): Observable<Personaje[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/personajes/${this.currentUser()?.idUsuario}`);
   }
   login(req: LoginRequest): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.apiUrl}/login`, req);

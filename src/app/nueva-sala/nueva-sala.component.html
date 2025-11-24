@@ -5,6 +5,14 @@
     <label class="form-label">Nombre</label>
     <input class="form-control" formControlName="nombre" placeholder="Nombre de sala" />
 
+    <label>Selecciona un personaje:</label>
+    <select formControlName="personajeSeleccionado">
+      <option [ngValue]="null">-- Elige tu personaje --</option>
+      <option *ngFor="let p of personajes" [ngValue]="p">
+        {{ p.nombre }}
+      </option>
+    </select>
+
     <div *ngIf="creationMessage" class="success-message">{{ creationMessage }}</div>
     <div *ngIf="creationError" class="error-message">{{ creationError }}</div>
 
