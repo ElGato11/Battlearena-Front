@@ -49,4 +49,7 @@ export class SalasService {
   unirseSala(body: SalaRequest){
     return this.http.post<boolean>(`${this.apiUrl}/unirse`,body)
   }
+  borrarContrincante(nombre: string){
+    return this.http.delete<void>(`${this.apiUrl}/borrarContrincante/${nombre}`)
+  }
 }

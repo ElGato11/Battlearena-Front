@@ -3,6 +3,7 @@ import { UserService } from '../utils/service/user.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Personaje } from '../utils/model/personaje';
+import { PersonajeService } from '../utils/service/personaje.service';
 
 @Component({
   selector: 'app-lista-personajes',
@@ -14,7 +15,8 @@ import { Personaje } from '../utils/model/personaje';
 export class ListaPersonajesComponent {
   personajes: Personaje[] = [];
 constructor(
-  private userService: UserService
+  private userService: UserService,
+  private personajeService: PersonajeService,
 ){}
 
   ngOnInit(): void {
@@ -25,5 +27,10 @@ constructor(
       this.userService.getMisPersonajes().subscribe(p => this.personajes = p);
       
     }  
+  }
+  editar(){}
+  borrar(id : number){
+    console.log(id);
+    this.personajeService.borrar(id).subscribe(()=>window.location.reload());
   }
 }

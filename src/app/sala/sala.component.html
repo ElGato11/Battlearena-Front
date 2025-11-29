@@ -1,6 +1,6 @@
 <div class="sala-container" *ngIf="sala">
   <div class="sala-box">
-    <div class="sala-item">
+    <div class="sala-item" *ngIf="inicioCombate == false">
       <h1>¡Que empiece el combate!</h1>
 
       <h2>{{ sala.nombre }}</h2>
@@ -11,7 +11,7 @@
         <p>
           Anfitrión:
           {{ sala.anfitrion }}
-          <span *ngIf="sala.pAnfitrion; else esperandoA" class="listo">✔ Listo</span>
+          <span *ngIf="sala.panfitrion; else esperandoA" class="listo">✔ Listo</span>
           <ng-template #esperandoA>
             <span *ngIf="!sala.anfitrion" class="esperando">Esperando…</span>
             <span *ngIf="sala.anfitrion" class="listo">¡Listo!</span>
@@ -21,7 +21,7 @@
         <p>
           Contrincante:
           {{ sala.contrincante }}
-          <span *ngIf="sala.pContrincante; else esperandoC" class="listo">✔ Listo</span>
+          <span *ngIf="sala.pcontrincante; else esperandoC" class="listo">✔ Listo</span>
           <ng-template #esperandoC>
             <span *ngIf="!sala.contrincante" class="esperando">Esperando…</span>
             <span *ngIf="sala.contrincante" class="listo">¡Listo!</span>
@@ -29,9 +29,47 @@
         </p>
       </div>
     </div>
+    <div class="combat-modal" *ngIf="inicioCombate">
+      <div class="combat-card">
+        <h3>Combate: {{ sala.nombre }}</h3>
+
+
+        <div class="combat-row">
+          <div class="player">
+            <div class="player-name">Anfitrión - {{ sala.panfitrion?.nombre }}</div>
+            <div class="hp-bar">
+              <div class="hp-fill" [style.width.%]="hpAPorcentaje">&nbsp;</div>
+            </div>
+            <div class="hp-text">{{ hpA | number:'1.0-0' }} / {{ maxHpA | number:'1.0-0' }}</div>
+          </div>
+
+
+          <div class="player">
+            <div class="player-name">Contrincante - {{ sala.pcontrincante?.nombre }}</div>
+            <div class="hp-bar">
+              <div class="hp-fill" [style.width.%]="hpCPorcentaje">&nbsp;</div>
+            </div>
+            <div class="hp-text">{{ hpC | number:'1.0-0' }} / {{ maxHpC | number:'1.0-0' }}</div>
+          </div>
+        </div>
+
+
+        <div class="combat-actions">
+          <button class="btn" (click)="atacar()" [disabled]="!miTurno || !terminado">Atacar</button>
+          <button class="btn secondary" *ngIf="esAnfitrion && !combateActivoEnServidor" (click)="iniciarCombate()">Combatir</button>
+          <div class="turno">Turno: <strong>{{ miTurno ? 'Yo' : 'Oponente' }}</strong></div>
+        </div>
+
+
+        <div class="resultado" *ngIf="resultado">
+          <h2>{{ resultado }}</h2>
+          <button class="btn" (click)="cerrarCombate()">Cerrar</button>
+        </div>
+      </div>
+    </div>
     <div class="sala-item" id="btn-salir">
-      <button class="sala-btn" (click)="salir()">Salir</button>
-      <button *ngIf="!estoyListo" class="sala-btn" (click)="combatir()">Combatir</button>
+      <button class="sala-btn" [disabled]="combateActivoEnServidor" (click)="salir()">Salir</button>
+      <button *ngIf="this.sala.pcontrincante && this.sala.panfitrion" class="sala-btn" (click)="combatir()">Combatir</button>
     </div>
     
   </div>

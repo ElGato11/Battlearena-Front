@@ -57,6 +57,6 @@ guardar() {
 
 
   cancelar() {
-    this.router.navigateByUrl('/personajes');
+    this.router.navigateByUrl('/mis-personajes');
   }
 }

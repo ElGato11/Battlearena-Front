@@ -6,6 +6,8 @@ export interface Sala{
     nombre: string,
     anfitrion: string,
     contrincante: string,
-    pAnfitrion: Personaje | null,
-    pContrincante: Personaje | null,
+    panfitrion: Personaje | null,
+    pcontrincante: Personaje | null,
+    hpA?: number | null,
+    hpC?: number | null,
 }

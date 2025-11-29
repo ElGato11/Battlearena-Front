@@ -4,5 +4,7 @@
 <div class="lista">
   <div class="personaje-card" *ngFor="let p of personajes">
     <h4>{{ p.nombre }}</h4>
+    <button type="button" (click)="borrar(p.id)">Borrar</button>
+    <button type="button" (click)="editar()">editar</button>
   </div>
 </div>

@@ -18,9 +18,20 @@ import { CompatClient } from '@stomp/stompjs';
 })
 export class SalaComponent implements OnDestroy {
   sala: Sala | null = null;
-  stompClient!: CompatClient;
-  nombreSala!: string;
-  estoyListo: boolean = false;
+  stompClient?: CompatClient;
+  nombreSala: string = "";
+  inicioCombate:boolean = false;
+  resultado = false;
+  hpAPorcentaje: number= 100;
+  hpCPorcentaje: number= 100;
+  hpA = this.sala?.hpA;
+  hpC = this.sala?.hpC;
+  maxHpA = 20;
+  maxHpC = 20;
+  terminado = false;
+  esAnfitrion = false;
+  combateActivoEnServidor = false;
+  miTurno = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,8 +47,9 @@ export class SalaComponent implements OnDestroy {
     this.salasService.cargarSala(this.nombreSala)
       .subscribe(s => {
         this.sala = s;
-        console.log(this.sala);
+        this.maxHpA = s.hpA!;
       });
+      if(this.userService.currentUser()?.nombre == this.sala?.anfitrion) this.esAnfitrion = true;
     this.conectarWS();
   }
   ngOnDestroy(): void {
@@ -51,17 +63,43 @@ export class SalaComponent implements OnDestroy {
   this.stompClient.debug = () => {};
 
   this.stompClient.connect({}, () => {
-    this.stompClient.subscribe(`/topic/sala/${this.nombreSala}`, msg => {
+    if(this.stompClient)this.stompClient.subscribe(`/topic/sala/${this.nombreSala}`, msg => {
       this.sala = JSON.parse(msg.body);
+      console.log(this.sala, this.sala?.panfitrion == null);
+      if (this.sala?.panfitrion == null)this.salir();
+      this.miTurno= !this.miTurno;
+      if(this.sala?.hpA == 0 || this.sala?.hpC == 0)this.terminado = true;
     });
   });
 }
   combatir(){
-    JSON.parse(this.sala!.contrincante);
-    JSON.parse(this.sala!.anfitrion);
+    if(this.sala && this.sala.pcontrincante && this.sala.panfitrion){
+      this.inicioCombate = true;
+      this.maxHpC = this.sala.hpC!;
+    }
+    this.combateActivoEnServidor = true;
+    const anfitrionEmpieza = this.sala!.panfitrion!.destreza > this.sala!.pcontrincante!.destreza;
+    this.miTurno = (this.esAnfitrion === anfitrionEmpieza);
+
   }
+
   salir(){
-    this.salasService.borrarSala(this.nombreSala).subscribe(()=> this.router.navigateByUrl(`/lista-salas`));
+    if(this.userService.currentUser()?.nombre === this.sala?.anfitrion){
+      this.salasService.borrarSala(this.nombreSala).subscribe(()=> this.router.navigateByUrl(`/lista-salas`));
+    }else if(this.userService.currentUser()?.nombre === this.sala?.contrincante){
+      this.salasService.borrarContrincante(this.nombreSala).subscribe(()=> this.router.navigateByUrl(`/lista-salas`));
+    }
+    this.router.navigateByUrl("/lista-salas");
     
+    
+  }
+  iniciarCombate(){
+
+  }
+  cerrarCombate(){
+
+  }
+
+  atacar(){
   }
 }

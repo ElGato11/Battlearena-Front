@@ -31,9 +31,8 @@ entrarArena() {
   const sala = this.salasService.getSalaActual();
   if(sala){
     this.salasService.existe(sala).subscribe(b => {
-      console.log(b);
       if(b)this.router.navigate([`/sala/${sala}`]);
-      
+      else this.router.navigate(['/lista-salas']);
     })
   }else this.router.navigate(['/lista-salas']);
 }
